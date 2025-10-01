@@ -9,6 +9,15 @@ async function obtenerProductos(param) {
         .catch(e => console.log(e))
 }
 
+async function obtenerProducto() {
+    await fetch(`https://fakestoreapi.com/products`)
+        .then( response => {
+            return response.json()
+        }) 
+        .then( data => console.log(data))
+        .catch(e => console.log(e))
+}
+
 async function añadirProducto(t, p, c) {
     await fetch("https://fakestoreapi.com/products", {
         method: "POST",
@@ -36,7 +45,8 @@ async function borrarProducto(param) {
 try {
     switch(args[0].toLowerCase()){
     case "get":
-        obtenerProductos(args[1]);
+        if (args[1] == "products") obtenerProductos()
+            else if (args[1].includes("products/")) obtenerProducto(args[1])
         break
     case "post":
         añadirProducto(args[2], args[3], args[4]);
