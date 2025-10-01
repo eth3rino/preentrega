@@ -49,12 +49,14 @@ try {
             else if (args[1].includes("products/")) obtenerProducto(args[1])
         break
     case "post":
-        añadirProducto(args[2], args[3], args[4]);
+        if (args.length == 4) añadirProducto(args[1], args[2], args[3]);
+            else console.log("Faltan argumentos")
         break
     case "delete":
         borrarProducto(args[1]);
         break
-    }   
+    default: console.log("Metodo no reconocido")
+    }
 } catch (e) {
     console.log(e)
 }
