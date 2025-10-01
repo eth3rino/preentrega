@@ -37,8 +37,8 @@ async function añadirProducto(t, p, c) {
 
 async function borrarProducto(param) {
     await fetch(`https://fakestoreapi.com/${param}`, {method: "DELETE"})
-        .then((response) => {console.log(response)})
-        // .then(data => console.log(data))
+        .then((response) => {return response.json()})
+        .then(data => console.log(data))
         .catch(e => console.log(e))
 }
 
