@@ -1,6 +1,6 @@
 const args = process.argv.slice(2);
 
-async function getProduct(param) {
+async function obtenerProductos(param) {
     await fetch(`https://fakestoreapi.com/${param}`)
         .then( response => {
             return response.json()
@@ -9,37 +9,40 @@ async function getProduct(param) {
         .catch(e => console.log(e))
 }
 
-async function addProduct(t, p, c) {
+async function añadirProducto(t, p, c) {
     await fetch("https://fakestoreapi.com/products", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: 
-        {
+        body: JSON.stringify({
             "title": t,
             "price": p,
             "category": c
-        }
-    }).then(() => console.log("POST Request successful"))
+        })
+    }).then((response) => {
+        console.log(response); 
+        return response.json()})
+      .then( data => console.log(data))
       .catch(e => console.log(e))
         
 }
 
-async function deleteProduct(param) {
+async function borrarProducto(param) {
     await fetch(`https://fakestoreapi.com/${param}`, {method: "DELETE"})
-        .then(() => console.log("DELETE Request successful"))
+        .then((response) => {console.log(response)})
+        // .then(data => console.log(data))
         .catch(e => console.log(e))
 }
 
 try {
     switch(args[0].toLowerCase()){
     case "get":
-        getProduct(args[1]);
+        obtenerProductos(args[1]);
         break
     case "post":
-        addProduct(args[2], args[3], args[4]);
+        añadirProducto(args[2], args[3], args[4]);
         break
     case "delete":
-        deleteProduct(args[1]);
+        borrarProducto(args[1]);
         break
     }   
 } catch (e) {
